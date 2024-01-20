@@ -1,5 +1,5 @@
 <% flash.each do |flash_type, message| %>
-  <div class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow animate-appear-then-fade" 
+  <div class="flex items-center w-full max-w-xs p-4 mb-5 text-gray-500 bg-lime-100 rounded-lg shadow animate-appear-then-fade" 
     role="alert" data-controller="flash" data-action="animationend->flash#remove">
     <%= message %>
   </div>

@@ -1,14 +1,15 @@
 <%= turbo_frame_tag quote do %>
-  <div class="flex gap-2 justify-between items-center mb-1 bg-slate-400 rounded-md p-2">
+  <div class="flex justify-between items-center bg-slate-400 rounded-md p-2 mb-5">
     <%= link_to quote.name, 
         quote_path(quote), 
         data: { turbo_frame: "_top" } %>
-    <div class="flex flex[0_0_auto] self-start gap-1 justify-between items-center mb-2 p-1 ">
+    <div class="flex self-start gap-2 justify-between items-center">
       <%= button_to "Delete", 
           quote_path(quote), 
           method: :delete, 
-          class: "inline-flex items-center rounded-md bg-white" \
-        " px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+          data: { confirm: 'Are you sure you want to delete this?', turbo_confirm: 'Are you sure you want to delete this?' },
+          class: "inline-flex items-center rounded-md bg-red-400 text-white border-red-500" \
+        " px-3 py-2 text-sm font-semibold shadow-sm hover:bg-red-500" %>
       <%= button_to "Edit", edit_quote_path(quote), method: :get, class: "inline-flex items-center rounded-md bg-white" \
         " px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
     </div>

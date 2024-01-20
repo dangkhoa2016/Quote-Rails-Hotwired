@@ -1,6 +1,15 @@
 <main class="w-full pr-1 pl-1 mx-auto">
-  <%= link_to sanitize("&larr; Back to quotes"), quotes_path %>
-  <div class="flex flex-wrap gap-3">
-    <h1 class="text-4xl"><%= quote.name %></h1>
+  <div class='border border-indigo-400 bg-white p-5 rounded-lg shadow-lg'>
+    <%= link_to sanitize("&larr; Back to quotes"), quotes_path %>
+
+    <div class="flex flex-wrap gap-3 mt-5 flex-col">
+      <h1 class="text-4xl"><%= quote.name %></h1>
+
+      <p class="">Created at: <%= quote.created_at %></p>
+      <p class="">Updated at: <%= quote.updated_at %></p>
+
+      <%= button_to "Edit", edit_quote_path(quote), method: :get, form_class: 'block mt-5', class: "inline-flex items-center rounded-md bg-white" \
+          " px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+    </div>
   </div>
 </main>
