@@ -1,7 +1,11 @@
 class QuotesController < ApplicationController
-  helper_method :quote, :quotes
+  before_action :set_quote, only: [:show, :edit, :update, :destroy]
+  before_action :build_quote, only: [:new, :create]
+  before_action :set_main_page_flag, only: [:new, :edit], unless: :turbo_frame_request?
 
-  def index; end
+  def index
+    @quotes ||= current_company.quotes.ordered
+  end
 
   def show; end
 
@@ -10,55 +14,61 @@ class QuotesController < ApplicationController
   def edit; end
 
   def create
-    quote.assign_attributes(**quote_params, company: current_company)
+    @main_page = params.dig(:quote, :main_page)
+    @quote.assign_attributes(**quote_params, company: current_company)
 
-    if quote.save
-      respond_to do |format|
-        format.turbo_stream { flash.now[:notice] = "Quote was successfully created." }
-        format.html { redirect_to quotes_path, notice: 'Quote was successfully created.' }
-      end
+    if @quote.save
+      handle_response('Quote was successfully created.')
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    if quote.update(quote_params)
-      # redirect_to quotes_path, notice: 'Quote was successfully updated.'
-      respond_to do |format|
-        format.turbo_stream { flash.now[:notice] = 'Quote was successfully updated.' }
-        format.html { redirect_to quotes_path, notice: 'Quote was successfully updated.' }
-      end
+    @main_page = params.dig(:quote, :main_page)
+
+    if @quote.update(quote_params)
+      handle_response('Quote was successfully updated.')
     else
-      render :new
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    quote.destroy!
-
-    respond_to do |format|
-      format.turbo_stream { flash.now[:notice] = 'Quote was successfully destroyed.' }
-      # format.turbo_stream { render turbo_stream: turbo_stream.remove(quote) }
-      format.html { redirect_to quotes_path, notice: 'Quote was successfuly destroyed.' }
-    end
+    @main_page = params.dig(:main_page)
+    @quote.destroy!
+    handle_response('Quote was successfully destroyed.', quotes_path)
   end
 
   private
 
-  def quotes
-    @quotes ||= current_company.quotes.ordered
+  def set_quote
+    @quote = current_company.quotes.find(params[:id])
   end
 
-  def quote
-    @quote ||= if %w[new create].include?(action_name)
-      Quote.new
-    else
-      current_company.quotes.find(params[:id])
-    end
+  def build_quote
+    @quote = Quote.new
   end
 
   def quote_params
     params.require(:quote).permit(:name)
+  end
+
+  def set_main_page_flag
+    @main_page = action_name
+  end
+
+  def handle_response(notice, redirect_path = quote_path(@quote))
+    respond_to do |format|
+      format.turbo_stream do
+        if @main_page
+          redirect_to redirect_path, notice: notice
+          return
+        end
+
+        flash.now[:notice] = notice
+      end
+      format.html { redirect_to redirect_path, notice: notice }
+    end
   end
 end

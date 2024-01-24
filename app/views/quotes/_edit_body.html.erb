@@ -1,0 +1,9 @@
+<% if @main_page %>
+<h1 class="text-4xl mb-3 mt-5">
+  <%= @quote.new_record? ? 'New' : 'Edit' %> quote
+</h1>
+<% end %>
+
+<div class="flex flex-col">
+  <%= render "form" %>
+</div>

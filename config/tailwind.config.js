@@ -13,7 +13,7 @@ module.exports = {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       animation: {
-        'appear-then-fade': 'appear-then-fade-keyframes 4s both'
+        'appear-then-fade': 'appear-then-fade-keyframes 5s both'
       },
       keyframes: {
         'appear-then-fade-keyframes': {
