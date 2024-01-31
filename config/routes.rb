@@ -19,4 +19,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources 'quotes'
 
+  resource :profile, only: [:show, :edit, :update]
+
 end

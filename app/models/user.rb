@@ -11,7 +11,11 @@ class User < ApplicationRecord
   validates :company, presence: true
   belongs_to :company
 
-  def name
+  def user_name
     email.split('@').first.capitalize
+  end
+
+  def full_name
+    [first_name, last_name].compact.join(' ').capitalize
   end
 end

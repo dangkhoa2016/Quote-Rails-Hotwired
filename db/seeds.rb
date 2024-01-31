@@ -12,6 +12,8 @@ attr = { email: 'admin@local.admin' }
 user = User.find_by(attr)
 if (user.blank?)
   user = User.new(attr)
+  user.first_name = 'Admin'
+  user.last_name = 'User'
   company = Company.find_or_create_by(name: 'Startup')
   user.company = company
   user.password = '123456'
