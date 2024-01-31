@@ -1,0 +1,68 @@
+<!-- app/views/inventories/_form.html.erb -->
+
+<%= form_with(model: inventory, local: true) do |form| %>
+  <% if inventory.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(inventory.errors.count, "error") %> prohibited this inventory from being saved:</h2>
+
+      <ul>
+        <% inventory.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if params[:quote_id].present? %>
+    <%= form.hidden_field :quote_id, value: params[:quote_id] %>
+  <% else %>
+    <div class="mb-4">
+      <%= form.label :quote_id, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+      <%= form.collection_select :quote_id, @quotes, :id, :name, { include_blank: true }, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :quantity, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+    <%= form.number_field :quantity, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :location, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+    <%= form.text_field :location, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :purchase_date, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+    <%= form.date_field :purchase_date, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :purchase_price, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+    <%= form.text_field :purchase_price, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :expiration_date, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+    <%= form.date_field :expiration_date, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :manufacturer, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+    <%= form.text_field :manufacturer, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :serial_number, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+    <%= form.text_field :serial_number, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :notes, class: 'block text-gray-700 text-sm font-bold mb-2' %>
+    <%= form.text_area :notes, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

@@ -1,0 +1,10 @@
+<% if @inventories.any? %>
+  <div class="mt-4">
+    <h2 class="text-lg font-bold mb-2">Inventories</h2>
+    <%= render partial: 'inventories/inventory', collection: @inventories %>
+  </div>
+<% else %>
+  <p>No inventories found.</p>
+<% end %>
+
+<%= link_to "New inventory", new_quote_inventory_path(@quote), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>

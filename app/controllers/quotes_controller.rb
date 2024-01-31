@@ -7,7 +7,9 @@ class QuotesController < ApplicationController
     @quotes ||= current_company.quotes.ordered
   end
 
-  def show; end
+  def show
+    @inventories = @quote.inventories
+  end
 
   def new; end
 

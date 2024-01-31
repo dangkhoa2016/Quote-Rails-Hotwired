@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  resources :inventories
+
   root to: "pages#home"
-  
+
   devise_for :users, controllers: {
     registrations: "users/registrations",
     sessions: "users/sessions",
@@ -17,7 +19,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources 'quotes'
+
+  resources :quotes do
+    resources :inventories, only: [:new, :create]
+  end
 
   resource :profile, only: [:show, :edit, :update]
 

@@ -1,9 +1,15 @@
-<h1>User Profile</h1>
+<div class="container mx-auto px-4">
+  <h1 class="text-4xl font-bold mb-4">User Profile</h1>
 
-<p>Name: <%= current_user.full_name %></p>
-<p>Email: <%= current_user.email %></p>
-<p>Phone number: <%= current_user.phone_number %></p>
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <p class="mb-2"><span class="font-bold">Name:</span> <%= current_user.full_name %></p>
+    <p class="mb-2"><span class="font-bold">Email:</span> <%= current_user.email %></p>
+    <p class="mb-2"><span class="font-bold">Phone number:</span> <%= current_user.phone_number %></p>
+  </div>
 
-<%= link_to "Edit Profile", profile_edit_path %>
-<%= link_to "Change Password", '#' %>
-<%= link_to "Home", root_path, target: '_top' %>
+  <div class="flex space-x-4">
+    <%= link_to "Edit Profile", edit_profile_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= link_to "Change Password", '#', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= link_to "Home", root_path, target: '_top', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+</div>

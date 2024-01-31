@@ -10,9 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_20_153818) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_31_072414) do
   create_table "companies", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "inventories", force: :cascade do |t|
+    t.integer "quote_id", null: false
+    t.integer "quantity"
+    t.string "location"
+    t.date "purchase_date"
+    t.decimal "purchase_price"
+    t.date "expiration_date"
+    t.string "manufacturer"
+    t.string "serial_number"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quote_id"], name: "index_inventories_on_quote_id"
+  end
+
+  create_table "inventory", force: :cascade do |t|
+    t.integer "quote_id"
+    t.integer "quantity"
+    t.string "location"
+    t.date "purchase_date"
+    t.decimal "purchase_price", precision: 10, scale: 2
+    t.date "expiration_date"
+    t.string "manufacturer"
+    t.string "serial_number"
+    t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -54,6 +83,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_20_153818) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "inventories", "quotes"
+  add_foreign_key "inventory", "quotes"
   add_foreign_key "quotes", "companies", on_delete: :cascade
   add_foreign_key "users", "companies", on_delete: :cascade
 end
